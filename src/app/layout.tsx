@@ -1,6 +1,7 @@
 import type { Metadata } from "next"; 
 import "./globals.css";
- 
+import 'material-icons/iconfont/filled.css'
+
 
 export const metadata: Metadata = {
   title: "Url Shortener",
