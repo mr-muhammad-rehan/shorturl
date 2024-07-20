@@ -9,7 +9,7 @@ export default function ShortenForm() {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const handleCopy = async () => {
-    if(!shortedUrl) return;
+    if (!shortedUrl) return;
     try {
       await navigator.clipboard.writeText(shortedUrl);
       setIsCopied(true);
@@ -89,5 +89,14 @@ export default function ShortenForm() {
         </button>
       </form>
     </>
+  );
+}
+
+
+export function ShortenFromSkeliton() {
+  return (
+    <div className="animate-pulse flex flex-col">
+      <div className="h-12 bg-gray-200 rounded mb-4"></div>
+    </div>
   );
 }

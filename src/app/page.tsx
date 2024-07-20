@@ -1,6 +1,8 @@
 import dynamic from "next/dynamic";
+import {ShortenFromSkeliton} from '../components/ShortenForm';
 const ShortrenForm = dynamic(() => import("../components/ShortenForm"), {
   ssr: false,
+  loading: () => <ShortenFromSkeliton/> ,
 });
 
 export default function Home() {
