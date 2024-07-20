@@ -1,5 +1,3 @@
-Sure! Here is a comprehensive README for your project:
-
 ```markdown:README.md
 # URL Shortener
 
