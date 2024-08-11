@@ -1,4 +1,4 @@
-```markdown:README.md
+
 # URL Shortener
 
 This is a URL shortener project built with [Next.js](https://nextjs.org/). It allows users to shorten long URLs and provides a short link that redirects to the original URL.
