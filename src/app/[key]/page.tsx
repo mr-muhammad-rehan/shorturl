@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import client, { connectClient } from "@/lib/db";
+import {client, connectClient } from "@/lib/db";
 
 async function redirectToLink(key: string) {
   await connectClient();

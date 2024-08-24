@@ -1,22 +1,15 @@
 import { createClient } from '@vercel/postgres';
-import dotenv from 'dotenv';
-
-dotenv.config({
-  path: `${__dirname}/../.env`,
-  override: true,
-});
 
 let isConnected = false;
 
-const client = createClient({
+export const client = createClient({
   connectionString: process.env.POSTGRES_URL,
 });
 
-export const connectClient = async () => {
-  if (!isConnected) {
+export const connectClient = async () => { 
+  if (!isConnected && client.user && process.env.POSTGRES_URL) {
     await client.connect();
     isConnected = true;
   }
 };
-
-export default client;
+ 

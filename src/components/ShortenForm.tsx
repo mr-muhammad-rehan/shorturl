@@ -1,52 +1,36 @@
-"use client";
+'use client';
+
 import { FormEvent, useState } from "react";
-import { IResponse } from "@/models";
 import confetti from "canvas-confetti";
+import { confettiDefault } from "@/lib/generalConfig";
+import { GenerateCountResponse } from "@/pages/api/generate-url";
 
 export default function ShortenForm() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [shortedUrl, setShortedUrl] = useState<string>();
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
-  const handleCopy = async () => {
+  async function handleCopy() {
     if (!shortedUrl) return;
-    try {
-      await navigator.clipboard.writeText(shortedUrl);
-      setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset after 2 seconds
+    await navigator.clipboard.writeText(shortedUrl);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+    confetti(confettiDefault);
+  }
 
-      // Trigger confetti effect
-      confetti({
-        particleCount: 100,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-    } catch (err) {
-      console.error("Failed to copy!", err);
-    }
-  };
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (isLoading) return;
-
     setIsLoading(true);
     const formData = new FormData(event.currentTarget);
     const url = formData.get("url");
-
-    fetch("/api", {
+    if (!url) return;
+    fetch("/api/generate-url", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify({ url }),
-    })
-      .then((response) => response.json())
-      .then((data: IResponse) => {
-        setShortedUrl(data.url);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    }).then((res) => res.json())
+      .then((data: GenerateCountResponse) => setShortedUrl(data.url))
+      .finally(() => setIsLoading(false));
   }
 
   return (
@@ -92,8 +76,7 @@ export default function ShortenForm() {
   );
 }
 
-
-export function ShortenFromSkeliton() {
+export function ShortenFormSkeleton() {
   return (
     <div className="animate-pulse flex flex-col">
       <div className="h-12 bg-gray-200 rounded mb-4"></div>
